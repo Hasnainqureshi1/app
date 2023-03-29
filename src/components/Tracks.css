@@ -1,0 +1,44 @@
+.tracksCard{
+    /* background-color: red; */
+}
+.backgroundchange{
+    /* background-color: rebeccapurple; */
+}
+.tracksCard{
+    width: 18rem; height: 410px;
+}
+.cardContainer{
+    padding: 0 10px;
+}
+.card-head-text{
+    font-size: 1.3rem;
+
+}
+card-second-text{
+    font-size: 1rem;
+}
+.card-third-text{
+    font-size: 0.8rem;
+}
+@media screen and (max-width: 1200px) {
+.tracksCard{
+width: 15rem;
+height: 24rem;
+}
+}
+@media screen and (max-width: 680px) {
+.tracksCard{
+width: 12rem;
+height: 19rem;
+}
+.card-head-text{
+    font-size: 1rem;
+
+}
+.card-second-text{
+    font-size: 0.8rem;
+}
+.card-third-text{
+    font-size: 0.7rem;
+}
+}
