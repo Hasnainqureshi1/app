@@ -7,7 +7,6 @@ import { Link ,useParams  } from "react-router-dom";
 const HomePage = () => {
   const [token, setToken] = useState("");
   const navigate = useNavigate();
-  const refresh_Token = process.env.REACT_APP_REFRESH_TOKEN;
  
   const data1 = [
     {'no':1,'name' :'Piano'}, 
@@ -35,20 +34,23 @@ const HomePage = () => {
       method: 'POST', 
         headers: {
         'Content-Type': 'application/json',
+
+        // "refreshtoken":"9BQWqEmD55Z0U51Cqs8bpB0vCm5nHim4R1n8bvNBeRb9Hp2etHCpqgMXui9UGcyi"
       },
       body:JSON.stringify(
         {
-          "refreshtoken":{refresh_Token}
+          "refreshtoken":"9BQWqEmD55Z0U51Cqs8bpB0vCm5nHim4R1n8bvNBeRb9Hp2etHCpqgMXui9UGcyi"
         }
 
       )
     });
     try {
       const json =await response.json();
+      console.log("getting listening...");
       const expirationTime = new Date().getTime() + json.expires_in * 1000; // convert to milliseconds
       localStorage.setItem('accessTokenExpirationTime', expirationTime);
       localStorage.setItem("token",json.token)
- 
+       console.log(expirationTime)
        
       
       
@@ -60,13 +62,21 @@ const HomePage = () => {
   useEffect(() => {
     const accessToken = localStorage.getItem('token');
     const expirationTime = localStorage.getItem('accessTokenExpirationTime');
-    
+    console.log(expirationTime)
+    console.log(new Date().getTime())
+  
     if (!accessToken || !expirationTime ||  new Date().getTime()>= expirationTime ) {
       // If access token or expiration time is not available or has already passed,
       // navigate to home page and refresh token
-      
+      console.log(expirationTime)
+      console.log("get token called")
+
+       //1;20 <2;20
+       //1;20 >2;20
       getToken();
     }
+   
+    // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzA4NzkwOCwidGltZXN0YW1wIjoxNjc5NzcxODQxOTE2LCJpYXQiOjE2Nzk3NzE4NDEsImV4cCI6MTY3OTc3NTQ0MX0.A7ljQKKg6sRGSOYmtGYWX2mriqmo_BBaVu6T12c5VdE
   }, []);
 
   
@@ -76,8 +86,14 @@ const HomePage = () => {
   const searchList = data1.filter((item) => {
   return item.name.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1;
 });
- 
+const tableBody = document.querySelector(".table");
+// if (searchList.length === 0) {
+   
+  // console.log("No items found");
+// } else {
   console.log(setArtists(searchList));
+// }
+// console.log(setArtists(searchList))
  
  
   };
