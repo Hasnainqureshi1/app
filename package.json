@@ -1,8 +1,8 @@
 {
   "name": "app",
   "version": "0.1.0",
-  "private": true,
-  "homepage": "https://hasnainqureshi1.github.io/app/",
+  "private": false,
+  "homepage": "https://hasnainqureshi1.github.io/app",
  
 
   "dependencies": {
