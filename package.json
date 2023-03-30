@@ -1,10 +1,10 @@
 {
   "name": "app",
   "version": "0.1.0",
-  "private": true,
+  
   "homepage": "https://hasnainqureshi1.github.io/app/",
 "scripts": {
-  "predeploy": "npm run build",
+  
   "deploy": "gh-pages -d build"
 
 },
