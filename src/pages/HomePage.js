@@ -7,6 +7,7 @@ import { Link ,useParams  } from "react-router-dom";
 const HomePage = () => {
   const [token, setToken] = useState("");
   const navigate = useNavigate();
+  const refresh_Token = process.env.REACT_APP_REFRESH_TOKEN;
  
   const data1 = [
     {'no':1,'name' :'Piano'}, 
@@ -16,12 +17,11 @@ const HomePage = () => {
     {'no':5,'name' :'Funk'}, 
     {'no':6,'name' :'Electronic/Dance'}, 
     {'no':7,'name' :'Synthwave'}, 
+    
+  
+    
   ]
-
-  const CLIENT_ID = "6d33d99eaabf42b19c151b82171944a8";
-  const REDIRECT_URI = "http://localhost:3000";
-  const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
-  const RESPONSE_TYPE = "token";
+ 
   
   const params = useParams();
    
@@ -35,23 +35,20 @@ const HomePage = () => {
       method: 'POST', 
         headers: {
         'Content-Type': 'application/json',
-
-        // "refreshtoken":"9BQWqEmD55Z0U51Cqs8bpB0vCm5nHim4R1n8bvNBeRb9Hp2etHCpqgMXui9UGcyi"
       },
       body:JSON.stringify(
         {
-          "refreshtoken":"9BQWqEmD55Z0U51Cqs8bpB0vCm5nHim4R1n8bvNBeRb9Hp2etHCpqgMXui9UGcyi"
+          "refreshtoken":{refresh_Token}
         }
 
       )
     });
     try {
       const json =await response.json();
-      console.log("getting listening...");
       const expirationTime = new Date().getTime() + json.expires_in * 1000; // convert to milliseconds
       localStorage.setItem('accessTokenExpirationTime', expirationTime);
       localStorage.setItem("token",json.token)
-       console.log(expirationTime)
+ 
        
       
       
@@ -63,21 +60,13 @@ const HomePage = () => {
   useEffect(() => {
     const accessToken = localStorage.getItem('token');
     const expirationTime = localStorage.getItem('accessTokenExpirationTime');
-    console.log(expirationTime)
-    console.log(new Date().getTime())
-  
+    
     if (!accessToken || !expirationTime ||  new Date().getTime()>= expirationTime ) {
       // If access token or expiration time is not available or has already passed,
       // navigate to home page and refresh token
-      console.log(expirationTime)
-      console.log("get token called")
-
-       //1;20 <2;20
-       //1;20 >2;20
+      
       getToken();
     }
-   
-    // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzA4NzkwOCwidGltZXN0YW1wIjoxNjc5NzcxODQxOTE2LCJpYXQiOjE2Nzk3NzE4NDEsImV4cCI6MTY3OTc3NTQ0MX0.A7ljQKKg6sRGSOYmtGYWX2mriqmo_BBaVu6T12c5VdE
   }, []);
 
   
@@ -87,8 +76,10 @@ const HomePage = () => {
   const searchList = data1.filter((item) => {
   return item.name.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1;
 });
-
-console.log(setArtists(searchList))
+ 
+  console.log(setArtists(searchList));
+ 
+ 
   };
 
 
@@ -100,9 +91,7 @@ console.log(setArtists(searchList))
         <Link className={styles.navLogo} to="/" />
         <div className={styles.navMenu}>
           <div className={styles.contact}>
-          <Link className={styles.contact +''}  to="/" >
-            Contact
-          </Link>
+          <Link className={styles.contact} to="mailto:contact@kuratemusic.com">Contact</Link>
           </div>
           <div  className={styles.contact}>
 
@@ -134,12 +123,12 @@ console.log(setArtists(searchList))
             </tr>
           </thead>
           <tbody>
-            
-               {artists.map((item) => { 
+            {artists.length >0 ?
+               artists.map((item) => { 
                 return (
                     <tr scope="row" key={item.no}>
                       
-                      <td scope="col">{item.name}</td>
+                      <td scope="col" style={{lineHeight: "2.3rem"}}>{item.name}</td>
                       <td scope="col text-center " style={{textAlign:"center",width:"32%"}}>
                         <Link to={"/card/" + item.name.replace('/', '')}>
                           <button className="btn btn-outline-dark view-btn">
@@ -151,7 +140,7 @@ console.log(setArtists(searchList))
                   
                 );
               
-                })}
+                }):<div style={{marginTop:"10px"}}>Match Not found</div>}
           </tbody>
         </table>
       </div>

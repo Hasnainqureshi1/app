@@ -1,24 +1,26 @@
 import React from 'react'
 import { useEffect,useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {Link, useNavigate } from 'react-router-dom';
 import Spinner from './Spinner';
+import { CSSTransition,TransitionGroup } from 'react-transition-group';
+ import './Tracks.css'
 
-// import styles from "../pages/ArtistPage.module.css";
-import './Tracks.css'
+
 const Tracks = ({tracks}) => {
     const [tracksData, setTracksData] = useState([]);
     const [AcessToken, setAcessToken] = useState(localStorage.getItem("token"))
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true)
+    const [isVisible, setIsVisible] = useState(true);
     //method for fetching the Tracks
     
     const fetchtracks =async()=>{
         const newData = [];
         setLoading(true)
-        for (const id of tracks) {
-            console.log(id.id)
+        for (const track of tracks) {
+             console.log(track.id)
            
-        const response = await fetch( `https://api.chartmetric.com/api/track/${id.id}`, {
+        const response = await fetch( `https://api.chartmetric.com/api/track/${track.id}`, {
        
         method: 'GET', 
           headers: {
@@ -40,6 +42,7 @@ let  streams = obj.cm_statistics.sp_streams;
         img:obj.image_url,
         artists: obj.artists,
         streams: streams,
+        spotify: track.spotify
       });
          
     } catch (error) {
@@ -51,7 +54,7 @@ let  streams = obj.cm_statistics.sp_streams;
     
     setTracksData(newData);
     setLoading(false)
-      console.log(tracksData);
+     
 }
 function formatNumber(numberString) {
   const number = parseInt(numberString, 10);
@@ -135,14 +138,21 @@ function Title(props) {
     <>
     
     {loading && <Spinner />}
-    <div className='d-flex flex-wrap justify-content-center backgroundchange'>
+    <TransitionGroup className='d-flex flex-wrap justify-content-center backgroundchange'>
         {
-      tracksData.map(({ id, streams,img,name ,artists }) => (
+      tracksData.map(({ id, streams,img,name ,artists ,spotify}) => (
          
   
-      
+        <Link to={spotify} className="transition" style={{textDecoration:"none", color:"black"}} target="_blank">  
+   <CSSTransition
+   in={isVisible.toString()}
+   appear={Boolean("true")}
+  timeout={1000}
+  onExited={() => console.log("Exited")}
+  classNames="fade"
+>
     <div key={id} className=" mt-4  cardContainer">
-      <div className= "card tracksCard" style={{ }}>
+      <div className= "card tracksCard  "  style={{ }}>
      
         {img ? (
           <img
@@ -174,11 +184,13 @@ function Title(props) {
           </div>
         </div>
       </div>
-    </div> 
+    </div>
+    </CSSTransition> 
+    </Link>
     ))
   }
   
-    </div>
+  </TransitionGroup>
     </>
   )
 }

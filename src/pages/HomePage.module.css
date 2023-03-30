@@ -461,6 +461,7 @@ font-size: 2rem;
   
   .mainBody{
  font-size: 5.2vw;
+ padding: 20px;
   }
   .view-btn{
     padding: 5px !important;

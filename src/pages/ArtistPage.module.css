@@ -128,6 +128,10 @@
   color: var(--color-white);
   display: inline-block;
   font-size: 3vw;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  
   
 }
 .vectorIcon {
@@ -138,11 +142,13 @@
   overflow: hidden;
   max-height: 100%;
   font-size: 3vw;
+color: #fff;
 }
 .back {
  
   font-weight: 500;
   font-size: 3vw;
+  /* padding-left: 40px; */
 }
 .nonAactive{
   text-decoration: none;
@@ -151,16 +157,23 @@
   font-size: 2rem;
     font-weight: 600;
     color: inherit;
-    display: inline-block;
+   
+   
 }
 .backButton {
   display: flex;
- align-items: center;
+  align-items: center;
   bottom: 90.46%;
   left: 3.61%;
   cursor: pointer;
   font-size: var(--font-size-21xl);
   color: var(--color-white);
+  width: 24%;
+  padding-left: 40px;
+  top: 57px;
+  position: absolute;
+  
+  height: 4vh;
 }
 .NaviateHead{
   display: flex;
@@ -168,6 +181,8 @@
   justify-content: space-around;
   width: 70%;
   margin-top: 50px;
+  justify-content: flex-end;
+  width: 100vw;
   /* font-size: 1vw; */
 }
 .mainBody {
@@ -210,16 +225,11 @@ font-size: 2rem;
   font-weight: 600;
   color: inherit;
   display: inline-block;
+  text-decoration: none;
+  color: black;
 }
-.contact,
-.header,
-.home,
-.navMenu {
- 
-}
-.home,
-.navMenu {
-  
+.heading span{
+  margin-right: 5px;
 }
 .home {
   text-decoration: none;
@@ -262,6 +272,11 @@ font-size: 2rem;
 @media screen and (max-width: 1200px) {
   .artistPage {
     width: 100%;
+  }
+  .backButton{
+    width: 100vw;
+    top: 48px;
+
   }
 }
 
@@ -306,9 +321,20 @@ font-size: 2rem;
   }
   .back{
     font-size: 1.6rem;
+        
+    
   }
   .vectorIcon{
     width: 1.4rem;
+
+  }
+  .vectorIcon{
+    width: 4.3vw;
+    font-size: 1.4rem;
+    margin-right: 0;
+    /* margin-bottom: 8px; */
+    display: flex;
+    align-items: center;
   }
   .Card{
 
@@ -343,11 +369,40 @@ font-size: 2rem;
   .heading{
     font-size: 4.4vw;
     margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    width: 100vw !important;
+    margin-top: 38px;
+    margin-left: 0;
+    
   }
+ 
   .back{
     font-size: 4.4vw;
+    margin-left: 18px;
   }
   .vectorIcon{
     width: 4.3vw;
+    font-size: 4.3vw;
+    margin-right: 0;
+    /* margin-bottom: 8px; */
+    display: flex;
+    align-items: center;
+  }
+  .NaviateHead{
+    display: flex;
+    flex-direction: column-reverse !important;
+    justify-content: space-around;
+    width: 70%;
+    margin-top: 50px;
+    /* font-size: 1vw; */
+  }
+  .nonAactive{
+    padding: 10px;
+    font-weight: 600;
+    color: inherit;
+    display: inline-block;
+    display: inline-block;
+    font-size: 1rem !important;
   }
 }

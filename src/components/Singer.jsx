@@ -2,11 +2,13 @@ import React from 'react'
 import { useEffect,useState } from 'react';
 import { Link, useNavigate , useParams } from "react-router-dom";
 import './Tracks.css'
+import { CSSTransition,TransitionGroup } from 'react-transition-group';
 import Spinner from './Spinner';
 const Singer = ({artists}) => {
     const [artistData, setartistData] = useState([]);
     const [AcessToken, setAcessToken] = useState(localStorage.getItem("token"))
     const [loading, setLoading] = useState(true)
+    const [isVisible, setIsVisible] = useState(true);
 
    const navigate = useNavigate();
     //method for fetching the monthly listernes of artists
@@ -14,10 +16,11 @@ const Singer = ({artists}) => {
     const monthlyListernes =async()=>{
       const newData = [];
       if(artists){
-          setLoading(true)      
-        for (const id of artists) {
+          setLoading(true) 
+          // console.log(artists.id)     
+        for (const artist of artists) {
            
-        const response = await fetch( `https://api.chartmetric.com/api/artist/${id.id}`, {
+        const response = await fetch( `https://api.chartmetric.com/api/artist/${artist.id}`, {
        
         method: 'GET', 
           headers: {
@@ -30,15 +33,16 @@ const Singer = ({artists}) => {
      
       
      try {
-      
+    
      
         const {obj}=await response.json();
      console.log(obj.cm_statistics.sp_monthly_listeners);
      newData.push({
-        id,
+        id:artist.id,
         name:obj.name,
         img:obj.image_url,
         monthlyListeners: obj.cm_statistics.sp_monthly_listeners,
+        spotify:artist.spotify,
       });
     } 
       catch (error) {
@@ -50,6 +54,7 @@ const Singer = ({artists}) => {
     }
     setartistData(newData);
     setLoading(false) ; 
+    console.log(artistData)
      
 
     }
@@ -118,12 +123,19 @@ function MyComponent(props) {
     <>
         {loading && <Spinner />}
 
-    <div className='d-flex flex-wrap justify-content-center mt-4'>
+        <TransitionGroup className='d-flex flex-wrap justify-content-center backgroundchange'>
         {
-      artistData.map(({ id, monthlyListeners,img,name }) => (
+      artistData.map(({ id, monthlyListeners,img,name,spotify }) => (
 //    console.log(artist)
   
-      
+    <Link to={spotify} style={{textDecoration:"none", color:"black"}} target="_blank"> 
+       <CSSTransition
+   in={isVisible.toString()}
+   appear={Boolean("true")}
+  timeout={1000}
+  onExited={() => console.log("Exited")}
+  classNames="fade"
+> 
     <div key={id} className=" mt-4 cardContainer">
       <div className="card tracksCard"  >
      <div className="img-body card-img-top img-fluid"  style={{ height:"333px" }}>
@@ -135,7 +147,7 @@ function MyComponent(props) {
            
           />
         ) : (
-          <img src={"https://storage.googleapis.com/cm-app-assets/images/main/av2.png"}   className="w-100 h-100 object-fit-cover"/>
+          <img src={"https://m.media-amazon.com/images/I/51orVzm-YgL._UXNaN_FMjpg_QL85_.jpg"}   className="w-100 h-100 object-fit-cover"/>
         )}
         </div>
         <div className="card-body" style={{  height: "100px" }}>
@@ -148,10 +160,13 @@ function MyComponent(props) {
         </div>
       </div>
     </div> 
+    </CSSTransition>
+    </Link>
     ))
   }
   
-    </div>
+     
+    </TransitionGroup>
     </>
   )
 }
