@@ -129,7 +129,7 @@ const tableBody = document.querySelector(".table");
       <input
             className={styles.searchBar}
             type="text"
-            placeholder="Search "
+            placeholder="Search bar"
             onChange={search}
           />
       <div
