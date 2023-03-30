@@ -20,7 +20,11 @@ const HomePage = () => {
   
     
   ]
- 
+
+  const CLIENT_ID = "6d33d99eaabf42b19c151b82171944a8";
+  const REDIRECT_URI = "http://localhost:3000";
+  const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
+  const RESPONSE_TYPE = "token";
   
   const params = useParams();
    
@@ -29,9 +33,11 @@ const HomePage = () => {
   const [newToken, setnewToken] = useState();
   const  getToken =async()=> {
     //TODO : API CALL
-    const response = await fetch( `https://api.chartmetric.com/api/token`, {
+    console.log("data1")
+    const response = await fetch( `api/token`, {
        
-      method: 'POST', 
+      method: 'POST',
+      mode:'cors', 
         headers: {
         'Content-Type': 'application/json',
 
@@ -64,7 +70,7 @@ const HomePage = () => {
     const expirationTime = localStorage.getItem('accessTokenExpirationTime');
     console.log(expirationTime)
     console.log(new Date().getTime())
-  
+  // getToken();
     if (!accessToken || !expirationTime ||  new Date().getTime()>= expirationTime ) {
       // If access token or expiration time is not available or has already passed,
       // navigate to home page and refresh token

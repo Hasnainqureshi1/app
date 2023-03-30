@@ -5,7 +5,7 @@ import Spinner from './Spinner';
 import { CSSTransition,TransitionGroup } from 'react-transition-group';
  import './Tracks.css'
 
-
+ 
 const Tracks = ({tracks}) => {
     const [tracksData, setTracksData] = useState([]);
     const [AcessToken, setAcessToken] = useState(localStorage.getItem("token"))
@@ -20,9 +20,10 @@ const Tracks = ({tracks}) => {
         for (const track of tracks) {
              console.log(track.id)
            
-        const response = await fetch( `https://api.chartmetric.com/api/track/${track.id}`, {
+        const response = await fetch(`../api/track/${track.id}`, {
        
-        method: 'GET', 
+        method: 'GET',
+        mode:'cors',  
           headers: {
           'Content-Type': 'application/json',
           'Authorization':`Bearer ${AcessToken}`
@@ -54,7 +55,7 @@ let  streams = obj.cm_statistics.sp_streams;
     
     setTracksData(newData);
     setLoading(false)
-     
+      console.log(tracksData);
 }
 function formatNumber(numberString) {
   const number = parseInt(numberString, 10);
