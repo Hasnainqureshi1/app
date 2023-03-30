@@ -2,6 +2,12 @@
   "name": "app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://hasnainqureshi1.github.io/app/",
+"scripts": {
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d build"
+}
+
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
@@ -15,6 +21,7 @@
     "@types/react-dom": "^18.0.6",
     "axios": "^1.3.4",
     "fetch-intercept": "^2.4.0",
+    "gh-pages": "^5.0.0",
     "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -47,3 +54,4 @@
   "author": "",
   "license": "ISC"
 }
+
