@@ -113,7 +113,7 @@ const tableBody = document.querySelector(".table");
         <Link className={styles.navLogo} to="/" />
         <div className={styles.navMenu}>
           <div className={styles.contact}>
-          <Link className={styles.contact} to="mailto:contact@kuratemusic.com">Contact</Link>
+          <Link className={styles.contact} to="mailto:contact@kuratemusic.com">Contacts</Link>
           </div>
           <div  className={styles.contact}>
 
