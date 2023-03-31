@@ -45,7 +45,7 @@ const HomePage = () => {
       },
       body:JSON.stringify(
         {
-          "refreshtoken":"9BQWqEmD55Z0U51Cqs8bpB0vCm5nHim4R1n8bvNBeRb9Hp2etHCpqgMXui9UGcyi"
+          "refreshtoken":"txsvSdeOvZB04Hy8scOdTUoszsVZ38WK5jSuDffGc16FkfqY2AJlgKe5J5n2MmtF"
         }
 
       )
@@ -113,7 +113,7 @@ const tableBody = document.querySelector(".table");
         <Link className={styles.navLogo} to="/" />
         <div className={styles.navMenu}>
           <div className={styles.contact}>
-          <Link className={styles.contact} to="mailto:contact@kuratemusic.com">Contacts</Link>
+          <Link className={styles.contact} to="mailto:contact@kuratemusic.com">Contact</Link>
           </div>
           <div  className={styles.contact}>
 
@@ -129,7 +129,7 @@ const tableBody = document.querySelector(".table");
       <input
             className={styles.searchBar}
             type="text"
-            placeholder="Search bar"
+            placeholder="Search"
             onChange={search}
           />
       <div

@@ -71,4 +71,7 @@ height: 19rem;
 .card-third-text{
     font-size: 0.7rem;
 }
+.responsive_image{
+  min-height: 231px;
+}
 }

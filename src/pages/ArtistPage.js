@@ -213,18 +213,18 @@ const ArtistPage = () => {
 <div className="container ps-1" style={{marginTop:'40px', height:"auto"}}>
   <div className="row ">
   
-  { (id=="Funk" && <Singer artists = {data.Funk}/>)  }
-  { (id=="Piano" && <Singer artists = {data.Piano}/>)  }
-  { (id=="Phonk" && <Singer artists = {data.Phonk}/>)  }
-  { (id=="Ambient" && <Singer artists = {data.Ambient}/>)  }
+  { (id=="Funk" && <Singer artists = {data.Funk} loader = {true}/>)  }
+  { (id=="Piano" && <Singer artists = {data.Piano} loader = {true}/>)  }
+  { (id=="Phonk" && <Singer artists = {data.Phonk} loader = {true}/>)  }
+  { (id=="Ambient" && <Singer artists = {data.Ambient} loader = {true}/>)  }
   { id=="Indie" && <div className="">
-     <Tracks tracks = {track.Indie} />
-    <Singer artists = {data.Indie} />
+     <Tracks tracks = {track.Indie}  loader = {true}/>
+    <Singer artists = {data.Indie}  loader = {false}/>
   </div>
    }
-  { (id=="ElectronicDance" && <Tracks  tracks = {track.ElectronicDance}/>)  }
+  { (id=="ElectronicDance" && <Tracks  tracks = {track.ElectronicDance} loader = {true}/>)  }
  
-  { (id=="Synthwave" && <Singer artists = {data.Synthwave}/>)  }
+  { (id=="Synthwave" && <Singer artists = {data.Synthwave} loader = {true}/>)  }
   
   {/* for artists Singer component will be used and for tracks track component */}
 

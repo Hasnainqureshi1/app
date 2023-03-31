@@ -4,7 +4,7 @@ import { Link, useNavigate , useParams } from "react-router-dom";
 import './Tracks.css'
 import { CSSTransition,TransitionGroup } from 'react-transition-group';
 import Spinner from './Spinner';
-const Singer = ({artists}) => {
+const Singer = ({artists,loader}  ) => {
     const [artistData, setartistData] = useState([]);
     const [AcessToken, setAcessToken] = useState(localStorage.getItem("token"))
     const [loading, setLoading] = useState(true)
@@ -12,15 +12,20 @@ const Singer = ({artists}) => {
 
    const navigate = useNavigate();
     //method for fetching the monthly listernes of artists
-    // console.log(artists.id);
+
+    // console.log(loader);
+ 
     const monthlyListernes =async()=>{
       const newData = [];
       if(artists){
-          setLoading(true) 
-          // console.log(artists.id)     
-        for (const artist of artists) {
+        setLoading(true) 
+        if(!loader){
+   setLoading(false);
+ }
+          for (const artist of artists) {
+          console.log(artist)     
            
-        const response = await fetch( `https://api.chartmetric.com/api/artist/${artist.id}`, {
+        const response = await fetch( `api/artist/${artist.id}`, {
        
         method: 'GET', 
           headers: {
@@ -36,6 +41,7 @@ const Singer = ({artists}) => {
     
      
         const {obj}=await response.json();
+        // console.log(obj);
      console.log(obj.cm_statistics.sp_monthly_listeners);
      newData.push({
         id:artist.id,
@@ -100,7 +106,7 @@ useEffect(() => {
  
 
    
-}, [])
+}, [AcessToken])
 function formatNumber(numberString) {
   const number = parseInt(numberString, 10);
   return number.toLocaleString();
@@ -121,6 +127,7 @@ function MyComponent(props) {
 
   return (
     <>
+     
         {loading && <Spinner />}
 
         <TransitionGroup className='d-flex flex-wrap justify-content-center backgroundchange'>
@@ -138,7 +145,7 @@ function MyComponent(props) {
 > 
     <div key={id} className=" mt-4 cardContainer">
       <div className="card tracksCard"  >
-     <div className="img-body card-img-top img-fluid"  style={{ height:"333px" }}>
+     <div className="img-body card-img-top img-fluid responsive_image"  style={{ height:"333px" }}>
   {img ? (
           <img
             src={img}
