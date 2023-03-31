@@ -25,7 +25,7 @@ const Singer = ({artists,loader}  ) => {
           for (const artist of artists) {
           console.log(artist)     
            
-        const response = await fetch( `api/artist/${artist.id}`, {
+        const response = await fetch( `/api/artist/${artist.id}`, {
        
         method: 'GET', 
           headers: {

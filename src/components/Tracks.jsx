@@ -20,7 +20,7 @@ const Tracks = ({tracks}) => {
         for (const track of tracks) {
              console.log(track.id)
            
-        const response = await fetch(`api/track/${track.id}`, {
+        const response = await fetch(`/api/track/${track.id}`, {
        
         method: 'GET',
         mode:'cors',  

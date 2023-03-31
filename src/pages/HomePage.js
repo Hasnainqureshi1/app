@@ -34,7 +34,7 @@ const HomePage = () => {
   const  getToken =async()=> {
     //TODO : API CALL
     console.log("data1")
-    const response = await fetch( `api/token`, {
+    const response = await fetch( `./api/token`, {
        
       method: 'POST',
       mode:'cors', 
