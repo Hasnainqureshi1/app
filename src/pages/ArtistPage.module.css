@@ -153,7 +153,8 @@ color: #fff;
 .nonAactive{
   text-decoration: none;
   border: none;
-  padding: 40px;
+  /* padding: 40px; */
+  margin:40px;
   font-size: 2rem;
     font-weight: 600;
     color: inherit;
@@ -168,8 +169,8 @@ color: #fff;
   cursor: pointer;
   font-size: var(--font-size-21xl);
   color: var(--color-white);
-  width: 24%;
-  padding-left: 40px;
+  width:auto;
+ margin-left: 40px;
   top: 57px;
   position: absolute;
   
@@ -274,7 +275,7 @@ font-size: 2rem;
     width: 100%;
   }
   .backButton{
-    width: 100vw;
+    width: auto;
     top: 48px;
 
   }
@@ -398,11 +399,23 @@ font-size: 2rem;
     /* font-size: 1vw; */
   }
   .nonAactive{
-    padding: 10px;
+    /* padding: 10px; */
+    margin:10px;
     font-weight: 600;
     color: inherit;
     display: inline-block;
     display: inline-block;
     font-size: 1rem !important;
   }
+}
+@media screen and (max-width: 340px) {
+  .heading{
+    font-size: 1rem;}
+    .back{
+      font-size: 1rem;
+    } .vectorIcon{
+      width: 1rem;
+      font-size: 1rem;
+      
+    }
 }

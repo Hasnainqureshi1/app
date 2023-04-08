@@ -34,23 +34,13 @@ const HomePage = () => {
   const  getToken =async()=> {
     //TODO : API CALL
     console.log("data1")
-    const response = await fetch( `./api/token`, {
-       
+    const response = await fetch( `http://localhost:5000/api/token`, {
+       // 
       method: 'POST',
-      mode:'cors', 
-        headers: {
-        'Content-Type': 'application/json',
-
-        // "refreshtoken":"9BQWqEmD55Z0U51Cqs8bpB0vCm5nHim4R1n8bvNBeRb9Hp2etHCpqgMXui9UGcyi"
-      },
-      body:JSON.stringify(
-        {
-          "refreshtoken":"txsvSdeOvZB04Hy8scOdTUoszsVZ38WK5jSuDffGc16FkfqY2AJlgKe5J5n2MmtF"
-        }
-
-      )
+  
     });
     try {
+       console.log( response);
       const json =await response.json();
       console.log("getting listening...");
       const expirationTime = new Date().getTime() + json.expires_in * 1000; // convert to milliseconds
@@ -62,7 +52,7 @@ const HomePage = () => {
       
       
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   }
   useEffect(() => {

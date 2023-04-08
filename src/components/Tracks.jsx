@@ -17,39 +17,45 @@ const Tracks = ({tracks}) => {
     const fetchtracks =async()=>{
         const newData = [];
         setLoading(true)
-        for (const track of tracks) {
-             console.log(track.id)
-           
-        const response = await fetch(`/api/track/${track.id}`, {
+        
+              
+             const requests = tracks.map(track => {
+        return fetch(`http://localhost:5000/api/tracks/${track.id}`, {
        
         method: 'GET',
-        mode:'cors',  
+      
           headers: {
           'Content-Type': 'application/json',
           'Authorization':`Bearer ${AcessToken}`
        
         }
+             });
        
       });
     try {
-        
-     const {obj}=await response.json();
+      const responses = await Promise.all(requests);
+      const data = await Promise.all(responses.map(response => response.json()));
+        console.log(data);
+    //  const {obj}=await response.json();
      
-     console.log(obj.artists);
-let  streams = obj.cm_statistics.sp_streams;
+    //  console.log(obj.obj.streams);
+// let  streams = obj.cm_statistics.sp_streams;
+data.forEach((obj, index) => {
+  console.log(obj.obj.cm_statistics.sp_streams);
      newData.push({
-        id:obj.id,
-        name:obj.name,
-        img:obj.image_url,
-        artists: obj.artists,
-        streams: streams,
-        spotify: track.spotify
-      });
+        id:obj.obj.id,
+        name:obj.obj.name,
+        img:obj.obj.image_url,
+        artists: obj.obj.artists,
+        streams: obj.obj.cm_statistics.sp_streams,
+        spotify: tracks[index].spotify
+      })
+    });
          
     } catch (error) {
      console.log(error);
       }
-    }  
+      
 
     // }
     
@@ -142,7 +148,7 @@ function Title(props) {
     <TransitionGroup className='d-flex flex-wrap justify-content-center backgroundchange'>
         {
       tracksData.map(({ id, streams,img,name ,artists ,spotify}) => (
-         
+        <div className="main_container_ cardContainer">
   
         <Link to={spotify} className="transition" style={{textDecoration:"none", color:"black"}} target="_blank">  
    <CSSTransition
@@ -152,7 +158,7 @@ function Title(props) {
   onExited={() => console.log("Exited")}
   classNames="fade"
 >
-    <div key={id} className=" mt-4  cardContainer">
+    <div key={id} className=" mt-4   ">
       <div className= "card tracksCard  "  style={{ }}>
      
         {img ? (
@@ -188,6 +194,7 @@ function Title(props) {
     </div>
     </CSSTransition> 
     </Link>
+    </div>
     ))
   }
   

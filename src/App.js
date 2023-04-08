@@ -4,6 +4,7 @@ import {
   useNavigationType,
   useLocation,
 } from "react-router-dom";
+
 import HomePage from "./pages/HomePage";
 import ArtistPage from "./pages/ArtistPage";
 import { useEffect } from "react";

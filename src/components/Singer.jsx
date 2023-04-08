@@ -14,57 +14,48 @@ const Singer = ({artists,loader}  ) => {
     //method for fetching the monthly listernes of artists
 
     // console.log(loader);
- 
-    const monthlyListernes =async()=>{
+    const monthlyListernes = async () => {
       const newData = [];
-      if(artists){
-        setLoading(true) 
-        if(!loader){
-   setLoading(false);
- }
-          for (const artist of artists) {
-          console.log(artist)     
-           
-        const response = await fetch( `/api/artist/${artist.id}`, {
-       
-        method: 'GET', 
-          headers: {
-          'Content-Type': 'application/json',
-            'Authorization':`Bearer ${AcessToken}`
-          // "refreshtoken":"9BQWqEmD55Z0U51Cqs8bpB0vCm5nHim4R1n8bvNBeRb9Hp2etHCpqgMXui9UGcyi"
-        }
-       
-      });
-     
-      
-     try {
+      setLoading(true);
     
-     
-        const {obj}=await response.json();
-        // console.log(obj);
-     console.log(obj.cm_statistics.sp_monthly_listeners);
-     newData.push({
-        id:artist.id,
-        name:obj.name,
-        img:obj.image_url,
-        monthlyListeners: obj.cm_statistics.sp_monthly_listeners,
-        spotify:artist.spotify,
-      });
-    } 
-      catch (error) {
-         
-      console.log(error.message);
-      
-      
-      }
-    }
-    setartistData(newData);
-    setLoading(false) ; 
-    console.log(artistData)
-     
+      if (artists) {
+        try {
+          const requests = artists.map(artist => {
+            return fetch(`http://localhost:5000/api/artists/${artist.id}`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${AcessToken}`,
+              },
+            });
+          });
+    
+          const responses = await Promise.all(requests);
+          const data = await Promise.all(responses.map(response => response.json()));
+          console.log(data)
+          console.log(responses)
+          // console.log(data[0].monthlyListeners)
 
-    }
-    }
+          data.forEach((obj, index) => {
+            
+            newData.push({
+              id: artists[index].id,
+              name: obj.obj.name,
+              img: obj.obj.image_url,
+              monthlyListeners: obj.obj.cm_statistics.sp_monthly_listeners,
+              spotify: artists[index].spotify,
+            });
+          });
+          console.log(newData)
+          setartistData(newData);
+          setLoading(false);
+        } catch (error) {
+          console.log(error.message);
+          setLoading(false);
+        }
+      }
+    };
+    
 
 
     function checkAccessTokenValidity(accessToken) {
@@ -134,7 +125,7 @@ function MyComponent(props) {
         {
       artistData.map(({ id, monthlyListeners,img,name,spotify }) => (
 //    console.log(artist)
-  
+  <div className="main_container_ cardContainer">
     <Link to={spotify} style={{textDecoration:"none", color:"black"}} target="_blank"> 
        <CSSTransition
    in={isVisible.toString()}
@@ -143,7 +134,7 @@ function MyComponent(props) {
   onExited={() => console.log("Exited")}
   classNames="fade"
 > 
-    <div key={id} className=" mt-4 cardContainer">
+    <div key={id} className=" mt-4 ">
       <div className="card tracksCard"  >
      <div className="img-body card-img-top img-fluid responsive_image"  style={{ height:"333px" }}>
   {img ? (
@@ -169,6 +160,7 @@ function MyComponent(props) {
     </div> 
     </CSSTransition>
     </Link>
+    </div>
     ))
   }
   
