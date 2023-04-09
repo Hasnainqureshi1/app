@@ -16,7 +16,10 @@ const Singer = ({artists,loader}  ) => {
     // console.log(loader);
     const monthlyListernes = async () => {
       const newData = [];
-      setLoading(true);
+      if(!loader){
+        
+        setLoading(false);
+      }
     
       if (artists) {
         try {
